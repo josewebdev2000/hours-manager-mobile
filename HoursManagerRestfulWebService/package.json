@@ -1,0 +1,32 @@
+{
+  "name": "hours-manager-restful-web-api-service",
+  "version": "1.0.0",
+  "description": "Restul Web Service to interact with the Backend of the Hours Manager Web Application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "nodemon index.js"
+  },
+  "keywords": [
+    "Backend",
+    "API",
+    "Web",
+    "Service"
+  ],
+  "author": "Jose Brache Garcia",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.3",
+    "sequelize": "^6.37.3",
+    "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
