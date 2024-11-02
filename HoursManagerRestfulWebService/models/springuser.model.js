@@ -1,6 +1,7 @@
 /** JS Representation of the DB Entity 'SpringUser' */
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
+const Avatar = require("../config/avatars");
 
 // SpringUser Model Schema
 const SpringUser = sequelize.define("SpringUser", {
@@ -36,6 +37,7 @@ const SpringUser = sequelize.define("SpringUser", {
         type: DataTypes.STRING,
         allowNull: true,
         field: "SpringUserPicUrl",
+        defaultValue: Avatar.USER,
         validate: {
             isUrl: {
                 msg: "Please enter a valid URL"

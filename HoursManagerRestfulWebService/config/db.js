@@ -15,6 +15,4 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
     dialect: DB_DIALECT
 });
 
-console.log(sequelize);
-
 module.exports = sequelize;
