@@ -9,7 +9,16 @@
 import React, { useContext } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import { Toast } from "@ant-design/react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { FontAwesome } from "@expo/vector-icons";
+
+// Import Back-End API Endpoints
+import { apiClient, backendApiRoutes } from "../../config/backend.config";
+
+// Import Async Storage functionality
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import asyncStorageKeys from "../../config/asyncStorageKeys";
 
 // Import UserContext
 import { UserContext } from "../../contexts/User/User.context";
@@ -23,11 +32,38 @@ import dashboardContentStyles from "./DashboardContent.style";
 function DashboardContent(props)
 {
     // Import the user context to display user data
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     // Get the profile pic and name from the user
     const userName = user.name;
     const userPic = user.pic;
+
+    // Handle Logout Functionality
+    const handleLogout = async() => {
+
+        try
+        {
+            // Delete the AsyncStorage key
+            await AsyncStorage.multiRemove([asyncStorageKeys.jwtToken, asyncStorageKeys.jwtExpiryDate]);
+
+            // Send request to logout
+            await apiClient.post(backendApiRoutes.springUserRoutes.logout);
+        }
+
+        catch(error)
+        {
+            // Show error toast
+            const errorMsg = error.response.data.error;
+
+            Toast.fail(errorMsg);
+        }
+
+        finally
+        {
+            // Set the user to null either case
+            setUser(null);
+        }
+    }
 
     return (
         <DrawerContentScrollView
@@ -76,7 +112,7 @@ function DashboardContent(props)
 
             <DrawerItem
                 label="Profile"
-                onPress={() => {}}
+                onPress={() => props.navigation.navigate("Profile")}
                 labelStyle={dashboardContentStyles.drawerLabel}
                 icon={() => <Icon name="user-alt" size={dashboardContentStyles.drawerIcon.fontSize} color={dashboardContentStyles.drawerIcon.color} />}
             />
@@ -115,8 +151,8 @@ function DashboardContent(props)
             <DrawerItem
                 label="Log Out"
                 labelStyle={dashboardContentStyles.drawerLabel}
-                onPress={() => {}}
-                icon={() => <Icon name="" size={dashboardContentStyles.drawerIcon.fontSize} color={dashboardContentStyles.drawerIcon.color}/>}
+                onPress={handleLogout}
+                icon={() => <FontAwesome name="sign-out" size={dashboardContentStyles.drawerIcon.fontSize} color={dashboardContentStyles.drawerIcon.color}/>}
             />
 
 

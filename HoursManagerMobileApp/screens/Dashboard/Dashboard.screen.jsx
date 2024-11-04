@@ -1,60 +1,57 @@
-import React, { useContext } from "react";
-import { View, Text, Button } from "react-native";
-import { Toast } from "@ant-design/react-native";
+import React from "react";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 
-// Import UserContext
-import { UserContext } from "../../contexts/User/User.context";
+import dashboardScreenStyles from "./Dashboard.style";
 
-// Import Back-End API Endpoints
-import { apiClient, backendApiRoutes } from "../../config/backend.config";
-
-// Import Async Storage functionality
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import asyncStorageKeys from "../../config/asyncStorageKeys";
+// Import Components
+import SummaryCard from "../../components/SummaryCard/SummaryCard.component";
+import JobRecords from "../../components/JobRecords/JobRecords.component";
 
 import PropTypes from "prop-types";
 
+// Define gradient colors
+const dashboardLinearGradientColors = {
+    commonCardColors: ['#673ab7', '#9c27b0'],
+    touchableCardColors: ["rgb(59, 158, 255)", "rgb(152, 38, 252)"]
+};
+
 function Dashboard({ navigation })
 {
-    // Import function to setUser to null
-    const { setUser } = useContext(UserContext);
-
-    const handleLogout = async () => {
-        
-        try
-        {
-            // Delete the AsyncStorage key
-            await AsyncStorage.multiRemove([asyncStorageKeys.jwtToken, asyncStorageKeys.jwtExpiryDate]);
-
-            // Send request to logout
-            await apiClient.post(backendApiRoutes.springUserRoutes.logout);
-        }
-
-        catch(error)
-        {
-            // Show error toast
-            const errorMsg = error.response.data.error;
-
-            Toast.fail(errorMsg);
-        }
-
-        finally
-        {
-            // Set the user to null either case
-            setUser(null);
-        }
-
-    };
-
     return (
-        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-            <Text>Dashboard</Text>
-            <Button 
-                title="Log Out"
-                onPress={handleLogout}
-            />
-        </View>
+        <ScrollView style={dashboardScreenStyles.scroll}>
+            <View style={dashboardScreenStyles.container}>
+                <View style={dashboardScreenStyles.cardsContainer}>
+                    <SummaryCard 
+                        title="Closest Pay Date" 
+                        content="19, Dec 2024"
+                        colors={dashboardLinearGradientColors.commonCardColors}
+                    />
+                    <SummaryCard
+                        title="Jobs Registered"
+                        content="3"
+                        colors={dashboardLinearGradientColors.commonCardColors}
+                    />
+                    <SummaryCard
+                        title="Earnings"
+                        content="$250"
+                        colors={dashboardLinearGradientColors.commonCardColors}
+                    />
+                    <SummaryCard
+                        title="Hours Worked"
+                        content="45 Hr"
+                        colors={dashboardLinearGradientColors.commonCardColors}
+                    />
+                    <TouchableOpacity onPress={() => {}}>
+                        <SummaryCard
+                            title="Add New Job"
+                            content="Press here to add a new job"
+                            colors={dashboardLinearGradientColors.touchableCardColors}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <JobRecords />
+            </View>
+        </ScrollView>
     );
 }
 
