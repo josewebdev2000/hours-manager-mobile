@@ -3,13 +3,14 @@ import { StyleSheet } from "react-native";
 
 const dashboardScreenStyles = StyleSheet.create({
     scroll: {
-        flex: 1
+        flexGrow: 1,
     },
     container: {
-        flex: 1,
+        paddingBottom: 0,
+        marginBottom: 0,
+        padding: 15,
         justifyContent: "flex-start",
-        alignItems: "center",
-        padding: 15
+        alignItems: "center"
     },
     cardsContainer: {
         alignSelf: "stretch",

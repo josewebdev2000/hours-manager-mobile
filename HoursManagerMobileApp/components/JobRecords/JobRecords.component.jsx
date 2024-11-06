@@ -3,21 +3,24 @@
  * But later could be used for calculations screen or others
  */
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Tabs } from "@ant-design/react-native";
+
+import JobRecordTabRow from "../JobRecordTabRow/JobRecordTabRow.component";
 
 // Import data and stylesheet
 import jobRecordsStyles from "./JobRecords.style";
 import { tabTitles, data } from "./JobRecords.data";
 
-function JobRecords ()
+function JobRecords ({ setJobRecordsHeight })
 {
+
     return (
         <View style={jobRecordsStyles.container}>
             <Text style={jobRecordsStyles.title}>
                 Job Records
             </Text>
-            <Tabs tabs={tabTitles} initialPage={0} tabBarTextStyle={jobRecordsStyles.tabBar}>
+            <Tabs tabs={tabTitles} initialPage={0} tabBarBackgroundColor="#eeeeed">
                 {
                     tabTitles.map(tab => (
                         <View 
@@ -26,9 +29,12 @@ function JobRecords ()
                         >
                             {
                                 data[tab.title].map((item, index) => (
-                                    <Text key={index} style={jobRecordsStyles.tabText}>
-                                        {item}
-                                    </Text>
+                                    <JobRecordTabRow
+                                        key={index}
+                                        index={index}
+                                        setJobRecordsHeight={setJobRecordsHeight}
+                                        text={item}
+                                    />
                                 ))
                             }
                         </View>

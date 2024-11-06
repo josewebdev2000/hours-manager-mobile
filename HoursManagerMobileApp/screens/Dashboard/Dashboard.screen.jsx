@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { View, ScrollView, TouchableOpacity } from "react-native";
 
 import dashboardScreenStyles from "./Dashboard.style";
@@ -17,9 +17,12 @@ const dashboardLinearGradientColors = {
 
 function Dashboard({ navigation })
 {
+    // Dynamically define height of Container based on Jobs Records
+    const [jobRecordsHeight, setJobsRecordsHeight] = useState(0);
+
     return (
-        <ScrollView style={dashboardScreenStyles.scroll}>
-            <View style={dashboardScreenStyles.container}>
+        <ScrollView contentContainerStyle={dashboardScreenStyles.scroll}>
+            <View style={[dashboardScreenStyles.container, { height: (jobRecordsHeight + 720) }]}>
                 <View style={dashboardScreenStyles.cardsContainer}>
                     <SummaryCard 
                         title="Closest Pay Date" 
@@ -49,7 +52,9 @@ function Dashboard({ navigation })
                         />
                     </TouchableOpacity>
                 </View>
-                <JobRecords />
+
+                <JobRecords setJobRecordsHeight={setJobsRecordsHeight}/>
+
             </View>
         </ScrollView>
     );

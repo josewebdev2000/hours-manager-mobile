@@ -1,24 +1,7 @@
-/** Styles for Job Records */
+// Styles for each tab row
 import { StyleSheet } from "react-native";
 
-const jobRecordsStyles = StyleSheet.create({
-    container: {
-        margin: 10,
-        padding: 10,
-    },
-    title: {
-        textAlign: "center",
-        fontSize: 30,
-        fontWeight: "bold",
-        marginBottom: 16
-    },
-    tabsContainer: {
-        padding: 16,
-        alignItems: "center"
-    },
-    tabBar: {
-        backgroundColor: "#e8e8e8"
-    },
+const jobRecordsTabRowStyles = StyleSheet.create({
     tabRow: {
         width: "100%",
         height: 50,
@@ -41,4 +24,4 @@ const jobRecordsStyles = StyleSheet.create({
     }
 });
 
-export default jobRecordsStyles;
+export default jobRecordsTabRowStyles;
